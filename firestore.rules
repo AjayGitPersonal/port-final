@@ -1,0 +1,43 @@
+// firestore.rules
+// Deploy with: firebase deploy --only firestore:rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper: is the request from a signed-in admin? ──────
+    // Add your admin UID(s) in the list below
+    // Firebase Console → Authentication → Users → copy UID
+    function isAdmin() {
+      return request.auth != null &&
+             request.auth.uid in [
+               "REPLACE_WITH_YOUR_ADMIN_UID"
+             ];
+    }
+
+    // ── Sessions ────────────────────────────────────────────
+    // Public read (portfolio page fetches live sessions)
+    // Write only for admin
+    match /sessions/{docId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
+    // ── Blog Posts ──────────────────────────────────────────
+    // Public read for published posts; admin can read all & write
+    match /blogs/{docId} {
+      allow read:  if resource.data.status == "published" || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ── Certifications ──────────────────────────────────────
+    match /certifications/{docId} {
+      allow read:  if true;
+      allow write: if isAdmin();
+    }
+
+    // ── Deny everything else ────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

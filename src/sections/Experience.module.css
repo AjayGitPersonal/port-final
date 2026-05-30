@@ -1,0 +1,131 @@
+/* src/sections/Experience.module.css */
+.section { padding: 80px 5%; background: #fff; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+/* Header */
+.header { margin-bottom: 48px; }
+.tag { font-size: 11px; font-weight: 600; color: var(--blue); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.heading { font-family: var(--font-display); font-size: clamp(26px,3.5vw,38px); font-weight: 800; color: var(--navy); letter-spacing: -1px; margin-bottom: 12px; }
+.sub { font-size: 15px; color: var(--gray500); line-height: 1.7; max-width: 580px; }
+
+/* Block */
+.block { margin-bottom: 48px; }
+.blockHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+}
+.blockTitle {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy);
+}
+.blockBadge {
+  font-size: 12px; font-weight: 600; color: var(--blue);
+  background: var(--blue-100); padding: 4px 12px; border-radius: 20px;
+}
+
+/* Offline grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.card {
+  background: var(--gray50);
+  border: 1.5px solid var(--gray200);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(37,99,235,0.08); }
+
+.cardTop { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.orgName { font-size: 14px; font-weight: 700; color: var(--navy); line-height: 1.3; flex: 1; }
+.countBadge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; color: var(--accent2);
+  background: var(--green-50); padding: 3px 8px; border-radius: 20px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.dept { font-size: 12px; color: var(--gray500); }
+
+.stackRow { display: flex; flex-direction: column; gap: 3px; }
+.stackLabel { font-size: 10px; font-weight: 600; color: var(--gray400); text-transform: uppercase; letter-spacing: 0.5px; }
+.stackVal { font-size: 13px; font-weight: 500; color: var(--navy); }
+
+.cardFooter { display: flex; flex-direction: column; gap: 4px; padding-top: 8px; border-top: 1px solid var(--gray200); }
+.location { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gray500); }
+.working { font-size: 11px; color: var(--blue); font-weight: 500; }
+
+/* Toggle */
+.toggleBtn {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 1.5px solid var(--gray200);
+  color: var(--gray700); padding: 9px 20px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; font-family: var(--font-body);
+  cursor: pointer; transition: all .15s; margin-top: 4px;
+}
+.toggleBtn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-50); }
+
+/* Online grid */
+.onlineGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.uniBlock {
+  background: var(--gray50); border: 1.5px solid var(--gray200);
+  border-radius: var(--radius); padding: 20px; overflow: hidden;
+}
+.uniHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.uniName { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.uniCount { font-size: 12px; color: var(--blue); font-weight: 500; }
+.collapseBtn {
+  background: #fff; border: 1.5px solid var(--gray200);
+  border-radius: 8px; width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--gray700); flex-shrink: 0;
+  transition: all .15s;
+}
+.collapseBtn:hover { border-color: var(--blue); color: var(--blue); }
+.collapseHint { font-size: 12px; color: var(--gray400); margin-top: 10px; }
+
+.collegeList { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+.collegeItem { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--gray700); line-height: 1.4; }
+.collegeDot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 5px; }
+
+/* IBM / Corporate grid */
+.ibmGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+.ibmCard {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--gray50); border: 1.5px solid var(--gray200);
+  border-radius: var(--radius); padding: 20px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.ibmCard:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(37,99,235,0.08); }
+
+.ibmLogo {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: #dbeafe; color: #1d4ed8;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 12px; font-weight: 800;
+  flex-shrink: 0;
+}
+
+.ibmContent { flex: 1; min-width: 0; }
+.ibmTitle { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.ibmSub { font-size: 12px; color: var(--gray500); margin-bottom: 10px; line-height: 1.4; }
+.ibmTags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.ibmTags span {
+  font-size: 11px; font-weight: 500; color: var(--gray700);
+  background: #fff; border: 1px solid var(--gray200);
+  padding: 2px 8px; border-radius: 20px;
+}
+.ibmWorking { font-size: 11px; font-weight: 600; color: var(--blue); }
+
+@media (max-width: 700px) {
+  .onlineGrid { grid-template-columns: 1fr; }
+  .ibmGrid { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+}

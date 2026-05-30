@@ -1,0 +1,66 @@
+/* src/styles/tokens.css */
+:root {
+  --navy:         #0a0f1e;
+  --navy2:        #111827;
+  --blue:         #2563eb;
+  --blue-light:   #3b82f6;
+  --blue-50:      #eff6ff;
+  --blue-100:     #dbeafe;
+  --accent:       #f59e0b;
+  --accent2:      #10b981;
+  --white:        #ffffff;
+  --gray50:       #f9fafb;
+  --gray100:      #f3f4f6;
+  --gray200:      #e5e7eb;
+  --gray300:      #d1d5db;
+  --gray400:      #9ca3af;
+  --gray500:      #6b7280;
+  --gray700:      #374151;
+  --gray900:      #111827;
+  --red:          #dc2626;
+  --red-50:       #fee2e2;
+  --green:        #059669;
+  --green-50:     #d1fae5;
+  --amber:        #d97706;
+  --amber-50:     #fef3c7;
+  --purple:       #7c3aed;
+  --purple-50:    #ede9fe;
+
+  /* Typography — human feel */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Spacing — slightly irregular to avoid AI-grid feel */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Border radius — less rounded = less AI-looking */
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows — more natural, less uniform */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);
+  --shadow:     0 2px 8px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.10), 0 8px 24px rgba(0,0,0,0.06);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.12), 0 16px 48px rgba(0,0,0,0.08);
+  --shadow-blue:0 4px 14px rgba(37,99,235,0.2);
+
+  --z-nav:     100;
+  --z-modal:   200;
+  --z-toast:   300;
+
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  --duration:  0.2s;
+}
