@@ -8,7 +8,7 @@ const domains = [
   title: "Python Programming",
   desc: "Core Python, OOP, libraries & real-world projects",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-  syllabus: "public/syllabus/Comprehensive Python Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/Python.pdf",
   learnMore: "https://www.python.org/about/",
 },
 {
@@ -16,7 +16,7 @@ const domains = [
   title: "Data Science & Analytics",
   desc: "Pandas, NumPy, Matplotlib, EDA & dashboards",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
-  syllabus: "public/syllabus/Datascience And Analytics Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/DS.pdf",
   learnMore: "https://en.wikipedia.org/wiki/Data_science",
 },
 {
@@ -24,7 +24,7 @@ const domains = [
   title: "Machine Learning",
   desc: "Supervised, unsupervised, model building & deployment",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg",
-  syllabus: "public/syllabus/Machine Learning Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/ML.pdf",
   learnMore: "https://en.wikipedia.org/wiki/Machine_learning",
 },
 {
@@ -33,7 +33,7 @@ const domains = [
   desc: "Oracle Cloud, AWS fundamentals & cloud architecture",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg",
   secondaryLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
-  syllabus: "public/syllabus/Oracle Cloud Aws Cloud Architecture Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/Cloud.pdf",
   learnMore: "https://www.oracle.com/in/cloud/",
 },
 {
@@ -41,7 +41,7 @@ const domains = [
   title: "DevOps & CI/CD",
   desc: "Docker, Kubernetes, Jenkins & pipeline automation",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
-  syllabus: "public/syllabus/Devops And Cicd Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/Devops.pdf",
   learnMore: "https://en.wikipedia.org/wiki/DevOps",
 },
 {
@@ -57,7 +57,7 @@ const domains = [
   title: "Core Java",
   desc: "Java fundamentals, OOP concepts, exception handling, collections & JDBC",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-  syllabus: "public/syllabus/Core Java Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/Java.pdf",
   learnMore: "https://www.oracle.com/java/"
 },
 {
@@ -65,7 +65,7 @@ const domains = [
   title: "SQL",
   desc: "Database fundamentals, queries, joins, procedures, optimization & analytics",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg",
-  syllabus: "public/syllabus/SQL Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/SQL.pdf",
   learnMore: "https://www.mysql.com/"
 },
 {
@@ -73,7 +73,7 @@ const domains = [
   title: "Web Technologies",
   desc: "HTML, CSS, JavaScript, responsive design, frontend & backend integration",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-  syllabus: "public/syllabus/Web Technologies Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/Web.pdf",
   learnMore: "https://developer.mozilla.org/en-US/docs/Learn"
 },
 {
@@ -81,7 +81,7 @@ const domains = [
   title: "Manual Testing",
   desc: "Software testing fundamentals, test cases, bug tracking & QA processes",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg",
-  syllabus: "public/syllabus/Manual Testing Mastery Syllabus 2026.pdf",
+  syllabus: "/syllabus/MT.pdf",
   learnMore: "https://www.guru99.com/software-testing.html"
 },
 ];
