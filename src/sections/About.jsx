@@ -129,15 +129,12 @@ export default function About() {
           <p className={styles.tag}>About Me</p>
           <h2 className={styles.heading}>Passionate About<br />Tech Education</h2>
           <p className={styles.para}>
-            I am Ajayeswaran Raja, an AI &amp; Tech Trainer with a passion for making complex
-            technologies accessible and practical. With hands-on experience across AI, Data Science,
-            DevOps, and Cloud platforms, I deliver industry-relevant training that bridges the gap
-            between academia and real-world applications.
+            I am Ajayeswaran Raja, an AI & Technology Trainer dedicated to transforming complex technical concepts into practical, industry-ready skills. With expertise spanning Artificial Intelligence, Machine Learning, Data Science, DevOps, Cloud Computing, and Generative AI, I focus on delivering hands-on, application-oriented learning experiences that prepare individuals for real-world challenges.
+            My approach combines technical depth with practical implementation, enabling learners to move beyond theory and gain the confidence to build, deploy, and manage modern technology solutions. I have successfully trained and mentored 2,000+ learners, helping them develop competencies in emerging technologies, cloud platforms, automation, and AI-driven solutions. Passionate about continuous learning and innovation, I strive to bridge the gap between academic knowledge and industry expectations by providing training that aligns with current technology trends and best practices. My mission is to empower aspiring professionals with the knowledge, tools, and mindset needed to thrive in the rapidly evolving digital landscape.
           </p>
           <p className={styles.para}>
-            I have trained 2000+ students at top institutions including PSG College of Technology,
-            Nandha Polytechnic College, Sri Krishna Arts &amp; Science College, and corporate batches
-            at Adroit Tech and IBM.
+            Professional Motto:
+            "Empowering learners with practical technology skills to innovate, adapt, and succeed in the digital era."
           </p>
         </div>
 
