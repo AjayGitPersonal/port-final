@@ -49,7 +49,7 @@ const domains = [
   title: "AI Fundamentals",
   desc: "AI concepts, Generative AI, prompt engineering & LLMs",
   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
-  syllabus: "public/syllabus/Ai.pdf",
+  syllabus: "/syllabus/Ai.pdf",
   learnMore: "https://openai.com/academy/what-is-ai/",
 },
 {
