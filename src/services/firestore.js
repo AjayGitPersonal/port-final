@@ -128,6 +128,16 @@ export const getUnreadCount = async () => {
   return snap.size;
 };
 
+// Utility: normalize Firestore timestamp or ISO/string to JS Date
+export const toDate = (ts) => {
+  if (!ts) return null;
+  try {
+    return typeof ts.toDate === "function" ? ts.toDate() : new Date(ts);
+  } catch (e) {
+    return new Date(ts);
+  }
+};
+
 // Compatibility service objects for legacy callers
 export const sessionsService = {
   getAll: getSessions,
