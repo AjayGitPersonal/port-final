@@ -46,7 +46,7 @@ export default function Hero() {
             >
               Explore My Work <ArrowRight size={16} />
             </button>
-            <a href="public/doc/Ajayeswaran_Raja.pdf" download className={styles.btnOutline}>
+            <a href="syllabus/Ajayeswaran_Resume.pdf" download className={styles.btnOutline}>
               Download CV <Download size={16} />
             </a>
           </motion.div>
