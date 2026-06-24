@@ -1,7 +1,8 @@
 // src/sections/Certifications.jsx
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, CheckCircle, Clock, Star, X, ZoomIn } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { certsService } from "../services/firestore";
 import styles from "./Certifications.module.css";
 
@@ -54,21 +55,43 @@ const values = [
   { icon: "🚀", label: "Impact & Grow" },
 ];
 
+// Cloudinary auto-format + quality + width transform
+function cdnUrl(url, w = 600) {
+  if (!url) return url;
+  return url.replace("/upload/", `/upload/f_auto,q_auto,w_${w}/`);
+}
+
+// Module-level animation configs — not recreated on every render
+const fadeUp = (i) => ({
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { delay: i * 0.1 },
+});
+
+const fadeRight = (i) => ({
+  initial: { opacity: 0, x: 20 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true },
+  transition: { delay: i * 0.1 },
+});
+
 export default function Certifications() {
-  const [certs, setCerts]       = useState([]);
-  const [loading, setLoading]   = useState(true);
-  const [preview, setPreview]   = useState(null);
+  const [preview, setPreview] = useState(null);
 
-  useEffect(() => {
-    certsService.getAll()
-      .then((data) => setCerts(data.length ? data : staticCerts))
-      .catch(() => setCerts(staticCerts))
-      .finally(() => setLoading(false));
-  }, []);
+  // ── useQuery replaces useEffect + useState — gives caching & dedup ──
+  const { data: certs = [], isLoading } = useQuery({
+    queryKey: ["certifications"],
+    queryFn: async () => {
+      const data = await certsService.getAll();
+      return data.length ? data : staticCerts;
+    },
+    staleTime: 1000 * 60 * 10,   // 10 min cache — certs don't change often
+    placeholderData: staticCerts, // show static data instantly while fetching
+  });
 
-  const completed = certs.filter((c) => c.status === "completed" || !c.status);
-  const pursuing  = certs.filter((c) => c.status === "pursuing");
-  const sorted    = [...certs].sort((a, b) => (a.order || 99) - (b.order || 99));
+  const pursuing = certs.filter((c) => c.status === "pursuing");
+  const sorted   = [...certs].sort((a, b) => (a.order || 99) - (b.order || 99));
 
   return (
     <section id="certifications" className={styles.section}>
@@ -89,17 +112,14 @@ export default function Certifications() {
             <p className={styles.sectionLabel}>JOURNEY TIMELINE</p>
             <div className={styles.track}>
               <div className={styles.trackLine} />
-              {loading ? (
+              {isLoading ? (
                 <div className={styles.trackLoading}>Loading…</div>
               ) : (
                 sorted.map((c, i) => (
                   <motion.div
                     key={c.id}
                     className={styles.trackItem}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                    {...fadeUp(i)}
                   >
                     <div className={`${styles.node} ${c.status === "pursuing" ? styles.nodePursuing : styles.nodeCompleted}`}>
                       {c.status === "pursuing" ? <Star size={13} /> : <CheckCircle size={13} />}
@@ -107,7 +127,7 @@ export default function Certifications() {
                     <div className={styles.timelineCard}>
                       <div className={styles.certLogoWrap} style={{ background: c.bg }}>
                         {c.logo
-                          ? <img src={c.logo} alt={c.abbr} className={styles.certLogo} />
+                          ? <img src={c.logo} alt={c.abbr} className={styles.certLogo} loading="lazy" width={30} height={30} />
                           : <span style={{ color: c.color, fontWeight: 800, fontSize: 12 }}>{c.abbr}</span>
                         }
                       </div>
@@ -123,7 +143,7 @@ export default function Certifications() {
                         }
                       </span>
                       {c.link && (
-                        <a href={c.link} target="_blank" rel="noreferrer" className={styles.verifyLink}>
+                        <a href={c.link} target="_blank" rel="noreferrer" className={styles.verifyLink} aria-label={`Verify ${c.title} certificate`}>
                           <ExternalLink size={12} />
                         </a>
                       )}
@@ -143,14 +163,11 @@ export default function Certifications() {
                   <motion.div
                     key={c.id}
                     className={styles.pursuingCard}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                    {...fadeRight(i)}
                   >
                     <div className={styles.pursuingLogo} style={{ background: c.bg }}>
                       {c.logo
-                        ? <img src={c.logo} alt={c.abbr} style={{ width: 22, height: 22, objectFit: "contain" }} />
+                        ? <img src={c.logo} alt={c.abbr} style={{ width: 22, height: 22, objectFit: "contain" }} loading="lazy" />
                         : <span style={{ color: c.color, fontWeight: 800, fontSize: 11 }}>{c.abbr}</span>
                       }
                     </div>
@@ -174,7 +191,7 @@ export default function Certifications() {
           </p>
 
           <div className={styles.certGallery}>
-            {sorted.filter(c => c.status !== "pursuing").map((c, i) => (
+            {sorted.filter((c) => c.status !== "pursuing").map((c, i) => (
               <motion.div
                 key={c.id}
                 className={styles.certCard}
@@ -184,12 +201,23 @@ export default function Certifications() {
                 transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -6 }}
                 onClick={() => c.certImage && setPreview(c)}
+                role={c.certImage ? "button" : undefined}
+                aria-label={c.certImage ? `View ${c.title} certificate` : undefined}
+                tabIndex={c.certImage ? 0 : undefined}
+                onKeyDown={(e) => e.key === "Enter" && c.certImage && setPreview(c)}
               >
                 {/* Certificate image or placeholder */}
                 <div className={styles.certImgWrap}>
                   {c.certImage ? (
                     <>
-                      <img src={c.certImage} alt={c.title} className={styles.certImg} loading="lazy" />
+                      <img
+                        src={cdnUrl(c.certImage, 480)}
+                        alt={`${c.title} certificate`}
+                        className={styles.certImg}
+                        loading="lazy"
+                        width={480}
+                        height={200}
+                      />
                       <div className={styles.certImgOverlay}>
                         <ZoomIn size={24} color="#fff" />
                       </div>
@@ -198,7 +226,7 @@ export default function Certifications() {
                     <div className={styles.certPlaceholder}>
                       <div className={styles.placeholderTop}>
                         {c.logo
-                          ? <img src={c.logo} alt={c.abbr} style={{ width: 48, height: 48, objectFit: "contain" }} />
+                          ? <img src={c.logo} alt={c.abbr} style={{ width: 48, height: 48, objectFit: "contain" }} loading="lazy" />
                           : <div style={{ width: 48, height: 48, borderRadius: 10, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", color: c.color, fontWeight: 800 }}>{c.abbr}</div>
                         }
                         <div className={styles.placeholderBadge}>COURSE CERTIFICATE</div>
@@ -252,6 +280,9 @@ export default function Certifications() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setPreview(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${preview.title} certificate`}
           >
             <motion.div
               className={styles.lightboxInner}
@@ -260,10 +291,18 @@ export default function Certifications() {
               exit={{ scale: 0.9 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button className={styles.lightboxClose} onClick={() => setPreview(null)}>
+              <button
+                className={styles.lightboxClose}
+                onClick={() => setPreview(null)}
+                aria-label="Close certificate preview"
+              >
                 <X size={20} />
               </button>
-              <img src={preview.certImage} alt={preview.title} className={styles.lightboxImg} />
+              <img
+                src={cdnUrl(preview.certImage, 1200)}
+                alt={`${preview.title} certificate`}
+                className={styles.lightboxImg}
+              />
               <div className={styles.lightboxInfo}>
                 <div className={styles.lightboxTitle}>{preview.title}</div>
                 <div className={styles.lightboxIssuer}>{preview.issuer}</div>
