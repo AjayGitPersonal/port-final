@@ -52,7 +52,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div {...fadeUp(0.6)} className={styles.socials}>
-            <a href="www.linkedin.com/in/ajayeswaran-raja" target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/ajayeswaran-raja" target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="LinkedIn">
               <Link2 size={16} />
             </a>
             <a href="https://github.com/AjayGitPersonal" target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="GitHub">

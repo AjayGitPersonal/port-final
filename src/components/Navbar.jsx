@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X, Lock } from "lucide-react";
 import styles from "./Navbar.module.css";
 
@@ -20,22 +20,27 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollTo = (href) => {
     setOpen(false);
     const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      // Move keyboard focus to the section for accessibility
+      el.setAttribute("tabindex", "-1");
+      el.focus({ preventScroll: true });
+    }
   };
 
   return (
-    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
+    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`} role="navigation" aria-label="Main navigation">
       <div className={styles.inner}>
-        <span className={styles.logo}>AR<span>.</span></span>
+        <span className={styles.logo} aria-label="Ajayeswaran Raja">AR<span aria-hidden="true">.</span></span>
 
-        <ul className={styles.links}>
+        <ul className={styles.links} role="list">
           {NAV_LINKS.map((l) => (
             <li key={l.href}>
               <button onClick={() => scrollTo(l.href)} className={styles.link}>
@@ -46,25 +51,33 @@ export default function Navbar() {
         </ul>
 
         <Link to="/admin" className={styles.adminBtn}>
-          <Lock size={14} />
-          Admin Login
+          <Lock size={14} aria-hidden="true" />
+          Admin
         </Link>
 
-        <button className={styles.hamburger} onClick={() => setOpen(!open)} aria-label="Menu">
-          {open ? <X size={22} /> : <Menu size={22} />}
+        <button
+          className={styles.hamburger}
+          onClick={() => setOpen(!open)}
+          aria-label="Navigation menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+        >
+          {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
         </button>
       </div>
 
       {open && (
-        <div className={styles.mobileMenu}>
+        <div id="mobile-menu" className={styles.mobileMenu} role="menu">
           {NAV_LINKS.map((l) => (
-            <button key={l.href} onClick={() => scrollTo(l.href)} className={styles.mobileLink}>
+            <button
+              key={l.href}
+              role="menuitem"
+              className={styles.mobileLink}
+              onClick={() => scrollTo(l.href)}
+            >
               {l.label}
             </button>
           ))}
-          <Link to="/admin" className={styles.mobileAdmin} onClick={() => setOpen(false)}>
-            Admin Login
-          </Link>
         </div>
       )}
     </nav>

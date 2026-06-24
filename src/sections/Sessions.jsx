@@ -1,22 +1,34 @@
 // src/sections/Sessions.jsx
-// Fetches live session data from Firestore (falls back to static data)
-import { useState, useEffect } from "react";
+// Uses TanStack Query for caching — no unnecessary Firestore refetches
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Users } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { sessionsService } from "../services/firestore";
 import { sessions as staticSessions } from "../data/content";
 import styles from "./Sessions.module.css";
 
-export default function Sessions() {
-  const [sessions, setSessions] = useState([]);
-  const [loading, setLoading]   = useState(true);
+// Module-level animation config — not recreated on every render
+const cardVariants = {
+  hidden:  { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
-  useEffect(() => {
-    sessionsService.getAll()
-      .then((data) => setSessions(data.length ? data : staticSessions))
-      .catch(() => setSessions(staticSessions))
-      .finally(() => setLoading(false));
-  }, []);
+function cloudinaryUrl(url, w = 600) {
+  if (!url) return url;
+  return url.replace("/upload/", `/upload/f_auto,q_auto,w_${w}/`);
+}
+
+export default function Sessions() {
+  const { data: sessions = [], isLoading } = useQuery({
+    queryKey: ["sessions"],
+    queryFn:  () => sessionsService.getAll(),
+    staleTime: 1000 * 60 * 5,
+    placeholderData: staticSessions,
+  });
 
   return (
     <section id="sessions" className={styles.section}>
@@ -27,9 +39,9 @@ export default function Sessions() {
           Glimpses from workshops, training sessions, and hands-on labs conducted across institutions.
         </p>
 
-        {loading ? (
+        {isLoading ? (
           <div className={styles.loadingGrid}>
-            {[1,2,3,4,5].map((i) => <div key={i} className={styles.skeleton} />)}
+            {[1, 2, 3, 4, 5].map((i) => <div key={i} className={styles.skeleton} />)}
           </div>
         ) : (
           <div className={styles.grid}>
@@ -37,15 +49,22 @@ export default function Sessions() {
               <motion.div
                 key={s.id}
                 className={styles.card}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                custom={i}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
                 whileHover={{ y: -4 }}
               >
-                {/* Photo or gradient placeholder */}
                 {s.photoUrl ? (
-                  <img src={s.photoUrl} alt={s.title} className={styles.photo} />
+                  <img
+                    src={cloudinaryUrl(s.photoUrl)}
+                    alt={s.title}
+                    className={styles.photo}
+                    loading="lazy"
+                    width={600}
+                    height={400}
+                  />
                 ) : (
                   <div
                     className={styles.thumb}
@@ -62,8 +81,8 @@ export default function Sessions() {
                   <h3 className={styles.title}>{s.title}</h3>
                   <p className={styles.org}>{s.org}</p>
                   <div className={styles.meta}>
-                    {s.location      && <span><MapPin size={11} /> {s.location}</span>}
-                    {s.date          && <span><Calendar size={11} /> {s.date}</span>}
+                    {s.location       && <span><MapPin size={11} /> {s.location}</span>}
+                    {s.date           && <span><Calendar size={11} /> {s.date}</span>}
                     {s.studentsCount > 0 && <span><Users size={11} /> {s.studentsCount} students</span>}
                   </div>
                 </div>

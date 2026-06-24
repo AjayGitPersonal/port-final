@@ -37,7 +37,7 @@ const INFO = [
   { icon: <Phone size={16} />, label: "Available", value: "Mon–Sat, 9AM–7PM IST" },
 ];
 
-const EMPTY = { name: "", email: "", subject: "", message: "" };
+const EMPTY = { name: "", email: "", subject: "", message: "", _hp: "" }; // _hp = honeypot
 
 export default function Contact() {
   const [form, setForm] = useState(EMPTY);
@@ -46,6 +46,8 @@ export default function Contact() {
 
   const validate = () => {
     const e = {};
+    // Honeypot — bots fill hidden fields; humans don't
+    if (form._hp) return { _hp: "spam" };
     if (!form.name.trim()) e.name = "Name is required";
     if (!form.email.trim()) e.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Invalid email";
@@ -60,6 +62,8 @@ export default function Contact() {
   };
 
   const handleSubmit = async () => {
+    // Double-check honeypot on submit
+    if (form._hp) return;
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
     setStatus("loading");
@@ -226,3 +230,20 @@ export default function Contact() {
     </section>
   );
 }
+
+/* ─── HONEYPOT FIELD — add this inside your <form> JSX ────────────────────
+   Place it after the last real input. Bots fill it; real users never see it.
+
+   <div style={{ position: "absolute", left: "-9999px", visibility: "hidden" }} aria-hidden="true">
+     <label htmlFor="_hp">Leave this empty</label>
+     <input
+       id="_hp"
+       type="text"
+       name="_hp"
+       tabIndex={-1}
+       autoComplete="off"
+       value={form._hp}
+       onChange={handleChange}
+     />
+   </div>
+─────────────────────────────────────────────────────────────────────────── */

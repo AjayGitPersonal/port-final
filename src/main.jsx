@@ -8,11 +8,11 @@ import { HelmetProvider } from "react-helmet-async";
 import * as Sentry from "@sentry/react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import useAuthStore from "./store/authStore";
-import App from "./App";
+import App, { Loader } from "./App";   // reuse shared Loader — no duplication
 import "./styles/tokens.css";
 import "./index.css";
 
-// ── Sentry (optional — set VITE_SENTRY_DSN in .env) ──────────
+// ── Sentry (optional — set VITE_SENTRY_DSN in .env) ──────────────────
 if (import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,
@@ -21,18 +21,18 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   });
 }
 
-// ── TanStack Query client ─────────────────────────────────────
+// ── TanStack Query client ─────────────────────────────────────────────
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 2,
-      staleTime: 1000 * 60 * 2,
+      staleTime: 1000 * 60 * 5,   // 5 min — avoid refetching on every mount
       refetchOnWindowFocus: false,
     },
   },
 });
 
-// ── Root component — initialises Firebase auth listener ───────
+// ── Root component — initialises Firebase auth listener ──────────────
 function Root() {
   const init = useAuthStore((s) => s.init);
   useEffect(() => { const unsub = init(); return unsub; }, [init]);
@@ -45,11 +45,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
-            <Suspense fallback={
-              <div style={{ display:"flex", alignItems:"center", justifyContent:"center", minHeight:"100vh", fontFamily:"var(--font-body)", color:"var(--gray500)" }}>
-                Loading…
-              </div>
-            }>
+            <Suspense fallback={<Loader />}>
               <Root />
             </Suspense>
           </BrowserRouter>

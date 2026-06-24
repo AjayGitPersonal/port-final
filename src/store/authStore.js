@@ -4,35 +4,41 @@ import { devtools } from "zustand/middleware";
 import { onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
 import { auth } from "../firebase";
 
-const useAuthStore = create(
-  devtools(
-    (set, get) => ({
-      user:    null,
-      loading: true,
-      error:   null,
+// Only the admin email may access the dashboard
+const ADMIN_EMAIL = "ajayeswaran23@gmail.com";
 
-      // Called once in main.jsx to start listening
-      init: () => {
-        const unsub = onAuthStateChanged(auth, (user) => {
-          set({ user, loading: false, error: null });
-        });
-        return unsub;
-      },
+const storeDefinition = (set) => ({
+  user:    null,
+  loading: true,
+  error:   null,
 
-      signOut: async () => {
-        try {
-          await firebaseSignOut(auth);
-          set({ user: null });
-        } catch (err) {
-          set({ error: err.message });
-        }
-      },
+  // Called once in main.jsx to start the Firebase auth listener
+  init: () => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      set({ user, loading: false, error: null });
+    });
+    return unsub; // caller must call this to unsubscribe on unmount
+  },
 
-      clearError: () => set({ error: null }),
-    }),
-    { name: "AuthStore" }
-  )
-);
+  signOut: async () => {
+    try {
+      await firebaseSignOut(auth);
+      set({ user: null });
+    } catch (err) {
+      set({ error: err.message });
+    }
+  },
 
-export { useAuthStore };
+  clearError: () => set({ error: null }),
+
+  // Helper — is the currently logged-in user the authorised admin?
+  isAdmin: (user) => user?.email === ADMIN_EMAIL,
+});
+
+// devtools only in development to avoid exposing state in production
+const useAuthStore = import.meta.env.DEV
+  ? create(devtools(storeDefinition, { name: "AuthStore" }))
+  : create(storeDefinition);
+
+export { useAuthStore, ADMIN_EMAIL };
 export default useAuthStore;
