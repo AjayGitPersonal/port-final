@@ -1,19 +1,19 @@
 // src/App.jsx
 import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuthStore, ADMIN_EMAIL } from "./store/authStore";
+import useAuthStore from "./store/authStore";
 
-// Lazy-loaded pages for code splitting
-const Portfolio  = lazy(() => import("./pages/Portfolio"));
-const AdminLogin = lazy(() => import("./pages/AdminLogin"));
-const Dashboard  = lazy(() => import("./pages/Dashboard"));
-const BlogList   = lazy(() => import("./pages/blog/BlogList"));
-const BlogPost   = lazy(() => import("./pages/blog/BlogPost"));
-const Privacy    = lazy(() => import("./pages/Privacy"));
-const Terms      = lazy(() => import("./pages/Terms"));
-const ContactPage = lazy(() => import("./pages/ContactPage"));
+// Lazy-loaded pages
+const Portfolio     = lazy(() => import("./pages/Portfolio"));
+const AdminLogin    = lazy(() => import("./pages/AdminLogin"));
+const Dashboard     = lazy(() => import("./pages/Dashboard"));
+const BlogList      = lazy(() => import("./pages/blog/BlogList"));
+const BlogPost      = lazy(() => import("./pages/blog/BlogPost"));
+const Privacy       = lazy(() => import("./pages/Privacy"));
+const Terms         = lazy(() => import("./pages/Terms"));
+const ContactPage   = lazy(() => import("./pages/ContactPage"));
 
-const Loader = () => (
+export const Loader = () => (
   <div style={{
     display: "flex", alignItems: "center", justifyContent: "center",
     minHeight: "100vh", fontFamily: "var(--font-body)",
@@ -23,15 +23,13 @@ const Loader = () => (
   </div>
 );
 
-// Export Loader so main.jsx can reuse it without duplicating the style
-export { Loader };
-
 function PrivateRoute({ children }) {
   const { user, loading } = useAuthStore();
   if (loading) return <Loader />;
-  // Restrict to the known admin email — not just any Firebase auth user
-  const allowed = user?.email === ADMIN_EMAIL;
-  return allowed ? children : <Navigate to="/admin" replace />;
+  // If no user at all → go to login
+  if (!user) return <Navigate to="/admin" replace />;
+  // If logged in → allow through (Firebase already verified the credentials)
+  return children;
 }
 
 export default function App() {
