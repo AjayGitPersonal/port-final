@@ -1,7 +1,7 @@
 /* src/sections/Hero.module.css */
 
 .section {
-  padding-top: 64px;
+  padding-top: 114px;
   position: relative;
   overflow: hidden;
   background:
@@ -27,7 +27,7 @@
   z-index: 1;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 50px 5% 40px;
+  padding: 60px 5% 60px;
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: 50px;

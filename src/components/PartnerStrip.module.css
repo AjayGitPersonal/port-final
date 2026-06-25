@@ -1,0 +1,56 @@
+/* src/components/PartnerStrip.module.css */
+
+.strip {
+  background: #fff;
+  border-top: 1px solid var(--gray200);
+  border-bottom: 1px solid var(--gray200);
+  padding: 28px 5%;
+  text-align: center;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray400);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 1px solid var(--gray200);
+  border-radius: var(--radius);
+  background: var(--gray50);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.logoWrap:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.logoText {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  /* color set inline per partner */
+}
+
+@media (max-width: 600px) {
+  .logos { gap: 10px 16px; }
+  .logoWrap { padding: 8px 14px; }
+}

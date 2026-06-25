@@ -1,0 +1,60 @@
+/* src/components/TickerBar.module.css */
+/* Sits above Navbar — no position:fixed, normal flow so Navbar pushes below it */
+
+.ticker {
+  width: 100%;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  /* Ensure it stacks above page content but below Navbar's z-100 */
+  position: relative;
+  z-index: 99;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  /* Total = 14 items × ~200px avg = ~2800px. Animation translates -50% (half) */
+  animation: ticker 28s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover so users can read */
+.ticker:hover .track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 32px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.3px;
+  font-family: var(--font-body);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+}
