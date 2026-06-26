@@ -14,7 +14,7 @@
   color: var(--gray400);
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .logos {
@@ -22,19 +22,20 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 12px 32px;
+  gap: 8px 12px;
 }
 
 .logoWrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border: 1px solid var(--gray200);
   border-radius: var(--radius);
   background: var(--gray50);
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   cursor: default;
+  min-width: 80px;
 }
 
 .logoWrap:hover {
@@ -43,14 +44,19 @@
   transform: translateY(-2px);
 }
 
-.logoText {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  /* color set inline per partner */
+/* Greyscale by default, full colour on hover */
+.logo {
+  display: block;
+  object-fit: contain;
+  filter: grayscale(0.6) opacity(0.75);
+  transition: filter 0.2s;
+}
+
+.logoWrap:hover .logo {
+  filter: grayscale(0) opacity(1);
 }
 
 @media (max-width: 600px) {
-  .logos { gap: 10px 16px; }
-  .logoWrap { padding: 8px 14px; }
+  .logos  { gap: 8px; }
+  .logoWrap { padding: 10px 14px; min-width: 64px; }
 }

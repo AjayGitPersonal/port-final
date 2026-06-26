@@ -3,7 +3,6 @@ import Navbar               from "../components/Navbar";
 import Footer               from "../components/Footer";
 import TickerBar            from "../components/TickerBar";
 import PartnerStrip         from "../components/PartnerStrip";
-import StatsStrip           from "../components/StatsStrip";
 import Hero                 from "../sections/Hero";
 import TechLogos            from "../sections/TechLogos";
 import About                from "../sections/About";
@@ -22,26 +21,24 @@ export default function Portfolio() {
       <SEO />
       <PersonJsonLd />
 
-      {/* Ticker sits above Navbar in normal flow */}
-      <SectionErrorBoundary name="TickerBar">
-        <TickerBar />
-      </SectionErrorBoundary>
+      {/* Both fixed — TickerBar at top:0 (z:101), Navbar at top:38px (z:100) */}
+      <TickerBar />
       <Navbar />
+
+      {/* Spacer pushes main content below the fixed ticker(38px) + navbar(76px) */}
+      <div style={{ height: "114px" }} aria-hidden="true" />
 
       <main>
         <SectionErrorBoundary name="Hero">
           <Hero />
         </SectionErrorBoundary>
 
-        {/* New: partner logos immediately below Hero */}
+        {/* Partner logos — Oracle, IBM, AWS etc below Hero */}
         <SectionErrorBoundary name="PartnerStrip">
           <PartnerStrip />
         </SectionErrorBoundary>
 
-        {/* New: dark stats strip — 2000+ numbers above the fold */}
-        <SectionErrorBoundary name="StatsStrip">
-          <StatsStrip />
-        </SectionErrorBoundary>
+        {/* StatsStrip removed — About section already has count-up stats */}
 
         <SectionErrorBoundary name="TechLogos">
           <TechLogos />

@@ -1,19 +1,17 @@
 // src/components/TickerBar.jsx
-// Scrolling announcement bar — sits above Navbar in Portfolio.jsx
-// Self-contained: no external deps, no token conflicts, no z-index clash with Navbar (z-100)
+import { Award, Building2, Users, MapPin, Cpu, Cloud, BrainCircuit } from "lucide-react";
 import styles from "./TickerBar.module.css";
 
 const ITEMS = [
-  "🎓 2000+ Students Trained",
-  "☁️ Oracle Cloud Certified",
-  "🤖 IBM AI Partner",
-  "🏛 15+ Institutions",
-  "🏆 Naan Mudhalvan Trainer",
-  "📍 Coimbatore · Tamil Nadu",
-  "🚀 AI · DevOps · Cloud · Data Science",
+  { icon: Users,        text: "2000+ Students Trained" },
+  { icon: Cloud,        text: "Oracle Cloud Certified" },
+  { icon: BrainCircuit, text: "IBM AI Partner" },
+  { icon: Building2,    text: "15+ Institutions" },
+  { icon: Award,        text: "Naan Mudhalvan Trainer" },
+  { icon: MapPin,       text: "Coimbatore · Tamil Nadu" },
+  { icon: Cpu,          text: "AI · DevOps · Cloud · Data Science" },
 ];
 
-// Duplicate items so the scroll loop is seamless
 const TRACK = [...ITEMS, ...ITEMS];
 
 export default function TickerBar() {
@@ -22,8 +20,8 @@ export default function TickerBar() {
       <div className={styles.track}>
         {TRACK.map((item, i) => (
           <span key={i} className={styles.item}>
-            <span className={styles.dot} />
-            {item}
+            <item.icon size={12} className={styles.icon} strokeWidth={2} />
+            {item.text}
           </span>
         ))}
       </div>
