@@ -12,7 +12,7 @@ const PARTNERS = [
   },
   {
     name: "IBM",
-    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ibm/ibm-original.svg",
+    src: "public/logos/bee.svg",
     height: 28,
   },
   {
