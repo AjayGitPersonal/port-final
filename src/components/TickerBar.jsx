@@ -4,10 +4,10 @@ import styles from "./TickerBar.module.css";
 
 const ITEMS = [
   { icon: Users,        text: "2000+ Students Trained" },
-  { icon: Cloud,        text: "Oracle Cloud Certified" },
-  { icon: BrainCircuit, text: "IBM AI Partner" },
+  { icon: Cloud,        text: "Oracle DevOps Certified" },
+  { icon: BrainCircuit, text: "IBM" },
   { icon: Building2,    text: "15+ Institutions" },
-  { icon: Award,        text: "Naan Mudhalvan Trainer" },
+  { icon: Award,        text: "TN Skills Trainer" },
   { icon: MapPin,       text: "Coimbatore · Tamil Nadu" },
   { icon: Cpu,          text: "AI · DevOps · Cloud · Data Science" },
 ];
